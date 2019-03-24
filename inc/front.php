@@ -254,13 +254,12 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
      */
     protected static function get_keywords($link)
     {
-        $keywords = self::get_meta($link, 'keywords');
-        $kw_arr = explode(',', $keywords);
+        $keywords = self::postmeta($link, 'keywords');
+        $kw_arr = self::csv($keywords);
         $kw_arr = apply_filters('seoal_link_keywords', $kw_arr, $link);
         $kw_arr = array_map('trim', (array)$kw_arr);
         $kw_out = array();
-        foreach($kw_arr as $kw)
-        {
+        foreach ($kw_arr as $kw) {
             // Second argument of `preg_quote`? Does not default to `/`
             $kw_out[] = preg_quote($kw, '/');
         }
