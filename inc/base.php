@@ -96,4 +96,9 @@ abstract class SEO_Auto_Linker_Base
         );
         return apply_filters('seoal_targets', $targets);
     }
+
+    protected static function csv($string)
+    {
+        return str_getcsv($string, ',', '"');
+    }
 } // end class

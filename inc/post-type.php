@@ -254,7 +254,7 @@ class SEO_Auto_Linker_Post_Type extends SEO_Auto_Linker_Base
             return;
 
         $map = array(
-            'keywords'   => array('strip_tags', 'esc_attr'),
+            'keywords'   => array('strip_tags'),
             'url'        => array('esc_url'),
             'times'      => array('absint'),
             'target'     => array('esc_attr'),
@@ -370,9 +370,9 @@ class SEO_Auto_Linker_Post_Type extends SEO_Auto_Linker_Base
                     </label>
                 </th>
                 <td>
-                    <textarea class="widefat" name="<?php self::key('keywords'); ?>" id="<?php self::key('keywords'); ?>"><?php self::meta('keywords', 'textarea'); ?></textarea>
+                    <textarea class="widefat" name="<?php self::key('keywords'); ?>" id="<?php self::key('keywords'); ?>"><?php echo htmlspecialchars(self::get_meta('keywords'), ENT_NOQUOTES, get_option('blog_charset')); ?></textarea>
                     <p class="description">
-                        <?php _e('Comma separated. These are the terms you want to link.', 'seoal'); ?>
+                        <?php _e('Comma separated. These are the terms you want to link. Wrap keywords containing commas with "quotes".', 'seoal'); ?>
                     </p>
                 </td>
             </tr>
