@@ -218,7 +218,7 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
         {
             foreach($links as $l)
             {
-                $blacklist = self::get_meta($l, 'blacklist');
+                $blacklist = self::postmeta($l, 'blacklist');
                 if(!$blacklist || !in_array(self::$permalink, (array)$blacklist))
                     $rv[] = $l;
             }
@@ -254,13 +254,12 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
      */
     protected static function get_keywords($link)
     {
-        $keywords = self::get_meta($link, 'keywords');
-        $kw_arr = explode(',', $keywords);
+        $keywords = self::postmeta($link, 'keywords');
+        $kw_arr = self::csv($keywords);
         $kw_arr = apply_filters('seoal_link_keywords', $kw_arr, $link);
         $kw_arr = array_map('trim', (array)$kw_arr);
         $kw_out = array();
-        foreach($kw_arr as $kw)
-        {
+        foreach ($kw_arr as $kw) {
             // Second argument of `preg_quote`? Does not default to `/`
             $kw_out[] = preg_quote($kw, '/');
         }
@@ -274,7 +273,7 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
      */
     protected static function get_link_url($link)
     {
-        $meta = self::get_meta($link, 'url');
+        $meta = self::postmeta($link, 'url');
         return apply_filters('seoal_link_url', $meta, $link);
     }
 
@@ -285,7 +284,7 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
      */
     protected static function get_link_max($link)
     {
-        $meta = self::get_meta($link, 'times');
+        $meta = self::postmeta($link, 'times');
         $meta = absint($meta) ? absint($meta) : 1;
         return apply_filters('seoal_link_max', $meta, $link);
     }
@@ -298,7 +297,7 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
      */
     protected static function get_link_target($link)
     {
-        $target = self::get_meta($link, 'target');
+        $target = self::postmeta($link, 'target');
         $target = apply_filters('seoal_link_target', $target, $link);
         if(!in_array($target, array_keys(self::get_targets())))
         {
@@ -318,7 +317,7 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
     {
         return apply_filters(
             'seoal_allow_self_links', 
-            'on' == self::get_meta($link, 'self_links'),
+            'on' == self::postmeta($link, 'self_links'),
             $link
         );
     }
@@ -334,7 +333,7 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
     {
         return apply_filters(
             'seoal_link_nofollow',
-            'on' == self::get_meta($link, 'nofollow'),
+            'on' == self::postmeta($link, 'nofollow'),
             $link
         );
     }
@@ -344,7 +343,7 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
      *
      * @since 0.7
      */
-    protected static function get_meta($post, $key)
+    protected static function postmeta($post, $key)
     {
         $res = apply_filters('seoal_pre_get_meta', false, $key, $post);
         if($res !== false)
