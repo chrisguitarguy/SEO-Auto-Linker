@@ -55,6 +55,12 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
     public static function content($content)
     {
         global $post;
+
+        return self::autolink($content, $post);
+    }
+
+    public static function autolink($content, $post)
+    {
         if(!self::allowed($post))
             return $content;
 
