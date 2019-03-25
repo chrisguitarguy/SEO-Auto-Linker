@@ -116,7 +116,6 @@ class SEO_Auto_Linker_Admin extends SEO_Auto_Linker_Base
     {
         ?>
         <div class="wrap">
-            <?php screen_icon(); ?>
             <h2><?php _e('SEO Auto Linker Options', 'seoal'); ?></h2>
             <?php settings_errors(self::SETTING); ?>
             <form method="post" action="<?php echo esc_url(admin_url('options.php')); ?>" style="width:80%">
