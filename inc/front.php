@@ -370,7 +370,7 @@ class SEO_Auto_Linker_Front extends SEO_Auto_Linker_Base
      *
      * @since 0.7
      */
-    protected function gen_replacements($arr, $key, $start=0)
+    protected static function gen_replacements($arr, $key, $start=0)
     {
         $rv = array();
         $h = self::$hash;
